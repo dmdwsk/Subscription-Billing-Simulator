@@ -30,12 +30,10 @@ public class SubscriptionEvent {
     @Column(nullable = false, length = 40)
     private SubscriptionEventType type;
 
-    // JSON як строка: {"oldStatus":"ACTIVE","newStatus":"GRACE","reason":"invoice unpaid"}
-    @Lob
-    @Column(name = "payload_json")
+    @Column(name = "payload_json",columnDefinition = "TEXT")
     private String payloadJson;
 
-    // хто ініціював (optional): user/system
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_user_id")
     private User actorUser;

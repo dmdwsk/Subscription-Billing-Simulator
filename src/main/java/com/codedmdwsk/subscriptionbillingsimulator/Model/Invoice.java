@@ -10,7 +10,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "invoice",indexes = {
+@Table(name = "invoices",indexes = {
         @Index(name = "idx_inv_subscription", columnList = "subscription_id"),
         @Index(name = "idx_inv_status", columnList = "status")
 },uniqueConstraints = {
