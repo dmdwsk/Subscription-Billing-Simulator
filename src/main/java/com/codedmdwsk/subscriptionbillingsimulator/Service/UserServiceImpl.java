@@ -10,11 +10,21 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserResponseDto::from)
+                .toList();
+    }
+
     @Override
     public UserResponseDto create(UserCreateDto dto) {
         try {
