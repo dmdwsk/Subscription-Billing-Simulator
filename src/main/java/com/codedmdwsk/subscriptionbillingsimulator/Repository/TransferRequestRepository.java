@@ -1,4 +1,4 @@
 package com.codedmdwsk.subscriptionbillingsimulator.Repository;
 
-public class TransferRequestRepository {
+public interface TransferRequestRepository {
 }

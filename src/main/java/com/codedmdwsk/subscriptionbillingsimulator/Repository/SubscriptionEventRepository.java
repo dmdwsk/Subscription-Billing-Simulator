@@ -1,4 +1,4 @@
 package com.codedmdwsk.subscriptionbillingsimulator.Repository;
 
-public class SubscriptionEventRepository {
+public interface SubscriptionEventRepository {
 }
