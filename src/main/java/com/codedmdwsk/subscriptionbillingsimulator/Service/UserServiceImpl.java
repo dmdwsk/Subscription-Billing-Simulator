@@ -4,6 +4,7 @@ import com.codedmdwsk.subscriptionbillingsimulator.Model.User;
 import com.codedmdwsk.subscriptionbillingsimulator.Repository.UserRepository;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.*;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
+import com.codedmdwsk.subscriptionbillingsimulator.exceptions.IncorrectPasswordException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.UserDeletionNotAllowedException;
 import lombok.RequiredArgsConstructor;
@@ -73,9 +74,10 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new NotFoundException("User not found"));
         boolean ok = passwordEncoder.matches(dto.getCurrentPassword(),user.getPasswordHash());
         if(!ok){
-            throw new IllegalArgumentException("Current password is incorrect");
+            throw new IncorrectPasswordException("Current password is incorrect");
         }
-
+        String newHash = passwordEncoder.encode(dto.getNewPassword());
+        user.setPasswordHash(newHash);
     }
 
     @Override
