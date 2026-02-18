@@ -8,8 +8,9 @@ create table if not exists users (
                                      id            serial primary key,
                                      email         varchar(255) not null,
     password_hash varchar(255) not null,
-    roles         varchar(100) not null,
-    created_at    timestamptz  not null
+    role          varchar(100) not null,
+    created_at    timestamptz  not null,
+    updated_at    timestamptz  not null
     );
 
 create unique index if not exists uk_users_email on users(email);

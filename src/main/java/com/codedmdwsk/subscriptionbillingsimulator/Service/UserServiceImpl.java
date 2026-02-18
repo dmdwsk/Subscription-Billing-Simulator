@@ -2,9 +2,7 @@ package com.codedmdwsk.subscriptionbillingsimulator.Service;
 
 import com.codedmdwsk.subscriptionbillingsimulator.Model.User;
 import com.codedmdwsk.subscriptionbillingsimulator.Repository.UserRepository;
-import com.codedmdwsk.subscriptionbillingsimulator.dto.UserCreateDto;
-import com.codedmdwsk.subscriptionbillingsimulator.dto.UserResponseDto;
-import com.codedmdwsk.subscriptionbillingsimulator.dto.UserUpdateDto;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.*;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.UserDeletionNotAllowedException;
@@ -31,11 +29,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserResponseDto getById(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("User not found"));
+        return UserResponseDto.from(user);
+    }
+
+    @Override
     public UserResponseDto create(UserCreateDto dto) {
         try {
             User entity = new User();
             entity.setEmail(dto.getEmail());
-            entity.setRoles("USER");
+            entity.setRole("USER");
             entity.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
             User saved = userRepository.save(entity);
             return UserResponseDto.from(saved);
@@ -60,6 +65,22 @@ public class UserServiceImpl implements UserService{
             }
         }
         return UserResponseDto.from(user);
+    }
+
+    @Override
+    public void changePassword(Integer id, ChangePasswordDto dto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        boolean ok = passwordEncoder.matches(dto.getCurrentPassword(),user.getPasswordHash());
+        if(!ok){
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+    }
+
+    @Override
+    public UserResponseDto updateRole(Integer id, UpdateUserRoleDto dto) {
+        return null;
     }
 
     @Override

@@ -21,11 +21,26 @@ public class User {
     @Column(nullable = false,length = 255)
     private String passwordHash;
     @Column(nullable = false,length = 100)
-    private String roles;
+    private String role;
     @Column(nullable = false)
     private Instant createdAt;
+    @Column(nullable = false)
+    private Instant updatedAt;
     @PrePersist
     void onCreate(){
-        this.createdAt = Instant.now();
+        normalizeEmail();
+        Instant now = Instant.now();
+        this.updatedAt = now;
+        this.createdAt = now;
+    }
+    @PreUpdate
+    void onUpdate(){
+        normalizeEmail();
+        this.updatedAt = Instant.now();
+    }
+
+    private void normalizeEmail() {
+        if (email != null) email = email.trim().toLowerCase();
+        if (email.isBlank()) email = null;
     }
 }

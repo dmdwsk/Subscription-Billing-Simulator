@@ -11,18 +11,20 @@ import java.time.Instant;
 @Builder
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor// Коли Hibernate витягує дані з бази, він спочатку створює пустий об'єкт через цей конструктор.
+@NoArgsConstructor
 public class UserResponseDto {
      private Integer id;
-     private String roles;
+     private String role;
      private String email;
      private Instant createdAt;
+     private Instant updatedAt;
      public static UserResponseDto from(User user){
           return new UserResponseDto(
                   user.getId(),
-                  user.getRoles(),
+                  user.getRole(),
                   user.getEmail(),
-                  user.getCreatedAt()
+                  user.getCreatedAt(),
+                  user.getUpdatedAt()
           );
      }
 }
