@@ -7,6 +7,7 @@ import com.codedmdwsk.subscriptionbillingsimulator.dto.UserResponseDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.UserUpdateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
+import com.codedmdwsk.subscriptionbillingsimulator.exceptions.UserDeletionNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -58,4 +59,12 @@ public class UserServiceImpl implements UserService{
         return UserResponseDto.from(user);
     }
 
+    @Override
+    public void delete(Integer id) {
+        try {
+            userRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new UserDeletionNotAllowedException("Cannot delete user with existing subscription");
+        }
+    }
 }

@@ -12,5 +12,6 @@ public interface UserService {
     List<UserResponseDto> getAllUsers();
     UserResponseDto create(UserCreateDto dto);
     UserResponseDto update(Integer id,UserUpdateDto dto);
+    void delete(Integer id);
 
 }
