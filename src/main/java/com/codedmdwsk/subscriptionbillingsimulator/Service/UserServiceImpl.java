@@ -7,6 +7,7 @@ import com.codedmdwsk.subscriptionbillingsimulator.dto.UserResponseDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserResponseDto> getAllUsers() {
@@ -31,10 +33,14 @@ public class UserServiceImpl implements UserService{
             User entity = new User();
             entity.setEmail(dto.getEmail());
             entity.setRoles("USER");
+            entity.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
             User saved = userRepository.save(entity);
             return UserResponseDto.from(saved);
         }catch (DataIntegrityViolationException dataIntegrityViolationException){
             throw new DuplicateUserException( "User with email " + dto.getEmail() + " already exists");
         }
     }
+//    @Transactional
+//    @Override
+//    public UserResponseDto update()
 }
