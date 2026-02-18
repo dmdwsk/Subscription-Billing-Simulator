@@ -22,13 +22,14 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional(readOnly = true)
     @Override
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(UserResponseDto::from)
                 .toList();
     }
-
+    @Transactional(readOnly = true)
     @Override
     public UserResponseDto getById(Integer id) {
         User user = userRepository.findById(id)
@@ -76,19 +77,32 @@ public class UserServiceImpl implements UserService{
         if(!ok){
             throw new IncorrectPasswordException("Current password is incorrect");
         }
+        if (dto.getCurrentPassword().equals(dto.getNewPassword())) {
+            throw new IllegalArgumentException("New password must be different");
+        }
         String newHash = passwordEncoder.encode(dto.getNewPassword());
         user.setPasswordHash(newHash);
     }
 
     @Override
     public UserResponseDto updateRole(Integer id, UpdateUserRoleDto dto) {
-        return null;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        String role = dto.getRole().trim().toUpperCase();
+        if(!role.equals("USER") && !role.equals("ADMIN")){
+            throw new IllegalArgumentException("Unsupported role: " + role);
+        }
+        if(!role.equals(user.getRole())){
+            user.setRole(role);
+        }
+        return UserResponseDto.from(user);
     }
 
     @Override
     public void delete(Integer me) {
         try {
             userRepository.deleteById(me);
+            userRepository.flush();
         }catch (DataIntegrityViolationException e){
             throw new UserDeletionNotAllowedException("Cannot delete user with existing subscription");
         }
