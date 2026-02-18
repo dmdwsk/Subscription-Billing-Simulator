@@ -10,7 +10,6 @@ import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.UserDeletionNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,23 +45,27 @@ public class UserServiceImpl implements UserService{
     }
     @Transactional
     @Override
-    public UserResponseDto update(Integer id,UserUpdateDto dto) {
-        User user = userRepository.findById(id)
+    public UserResponseDto update(Integer me,UserUpdateDto dto) {
+        User user = userRepository.findById(me)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         String newEmail = dto.getEmail();
-        boolean emailExist = userRepository.existsByEmail(newEmail,id);
-        if(emailExist){
-            throw new DuplicateUserException("User with email " + newEmail + " already exists");
+        if(newEmail != null) {
+            newEmail = newEmail.trim();
+            if(!newEmail.isBlank() && !newEmail.equalsIgnoreCase(user.getEmail())){
+                boolean emailExist = userRepository.existsByEmailIgnoreCaseAndIdNot(newEmail, me);
+                if (emailExist) {
+                    throw new DuplicateUserException("User with email " + newEmail + " already exists");
+                }
+                user.setEmail(newEmail);
+            }
         }
-        user.setEmail(newEmail);
-        userRepository.save(user);
         return UserResponseDto.from(user);
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer me) {
         try {
-            userRepository.deleteById(id);
+            userRepository.deleteById(me);
         }catch (DataIntegrityViolationException e){
             throw new UserDeletionNotAllowedException("Cannot delete user with existing subscription");
         }
