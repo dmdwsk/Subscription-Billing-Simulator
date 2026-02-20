@@ -1,4 +1,4 @@
-package com.codedmdwsk.subscriptionbillingsimulator.dto;
+package com.codedmdwsk.subscriptionbillingsimulator.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

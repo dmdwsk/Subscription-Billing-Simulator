@@ -2,7 +2,7 @@ package com.codedmdwsk.subscriptionbillingsimulator.Service;
 
 import com.codedmdwsk.subscriptionbillingsimulator.Model.User;
 import com.codedmdwsk.subscriptionbillingsimulator.Repository.UserRepository;
-import com.codedmdwsk.subscriptionbillingsimulator.dto.*;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.user.*;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.IncorrectPasswordException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService{
     }
     @Transactional
     @Override
-    public UserResponseDto update(Integer me,UserUpdateDto dto) {
+    public UserResponseDto update(Integer me, UserUpdateDto dto) {
         User user = userRepository.findById(me)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         String newEmail = dto.getEmail();

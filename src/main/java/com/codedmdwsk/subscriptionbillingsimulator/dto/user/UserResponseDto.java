@@ -1,4 +1,4 @@
-package com.codedmdwsk.subscriptionbillingsimulator.dto;
+package com.codedmdwsk.subscriptionbillingsimulator.dto.user;
 
 import com.codedmdwsk.subscriptionbillingsimulator.Model.User;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.codedmdwsk.subscriptionbillingsimulator.Controller;
 
 import com.codedmdwsk.subscriptionbillingsimulator.Service.UserService;
-import com.codedmdwsk.subscriptionbillingsimulator.dto.*;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.user.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
