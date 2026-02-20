@@ -1,9 +1,12 @@
 package com.codedmdwsk.subscriptionbillingsimulator.Service;
 
-import com.codedmdwsk.subscriptionbillingsimulator.Model.Plan;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanCreateDto;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanResponseDto;
 
 import java.util.List;
 
 public interface PlanService {
-    List<Plan> getAllPlans();
+    List<PlanResponseDto> getAllPlans();
+    PlanResponseDto getPlanById(Integer id);
+    PlanResponseDto createPlan(PlanCreateDto dto);
 }
