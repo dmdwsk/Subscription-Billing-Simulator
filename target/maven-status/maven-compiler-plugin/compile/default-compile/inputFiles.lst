@@ -19,6 +19,12 @@
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/Service/UserService.java
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/Service/UserServiceImpl.java
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/SubscriptionBillingSimulatorApplication.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/dto/ChangePasswordDto.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/dto/UpdateUserRoleDto.java
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/dto/UserCreateDto.java
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/dto/UserResponseDto.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/dto/UserUpdateDto.java
 /Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/exceptions/DuplicateUserException.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/exceptions/IncorrectPasswordException.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/exceptions/NotFoundException.java
+/Users/dmdwsk/Desktop/DenysProjects/SubscriptionBillingSimulator/src/main/java/com/codedmdwsk/subscriptionbillingsimulator/exceptions/UserDeletionNotAllowedException.java
