@@ -6,6 +6,7 @@ import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanCreateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanResponseDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,11 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public PlanResponseDto createPlan(PlanCreateDto dto) {
-        return null;
+        try {
+
+        }catch (DataIntegrityViolationException dataIntegrityViolationException){
+
+        }
     }
 
 
