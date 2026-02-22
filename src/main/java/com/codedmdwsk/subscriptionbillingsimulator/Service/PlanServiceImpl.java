@@ -33,6 +33,7 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public PlanResponseDto createPlan(PlanCreateDto dto) {
         try {
+            Plan plan =
 
         }catch (DataIntegrityViolationException dataIntegrityViolationException){
 
