@@ -4,6 +4,7 @@ import com.codedmdwsk.subscriptionbillingsimulator.Model.Plan;
 import com.codedmdwsk.subscriptionbillingsimulator.Repository.PlanRepositrory;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanCreateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanResponseDto;
+import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanUpdateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicatePlanException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,11 @@ public class PlanServiceImpl implements PlanService {
 
         Plan saved = planRepositrory.save(plan);
         return PlanResponseDto.from(saved);
+    }
+
+    @Override
+    public PlanResponseDto updatePlan(PlanUpdateDto dto) {
+        return null;
     }
 
 
