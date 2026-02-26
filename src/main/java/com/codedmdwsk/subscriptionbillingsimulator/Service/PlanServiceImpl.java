@@ -6,8 +6,8 @@ import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanCreateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanResponseDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanUpdateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicatePlanException;
-import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
+import com.codedmdwsk.subscriptionbillingsimulator.exceptions.PlanDeletionNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -45,12 +45,12 @@ public class PlanServiceImpl implements PlanService {
             );
         }
 
+
         Plan plan = new Plan();
         plan.setName(name);
         plan.setPeriod(dto.getPeriod());
         plan.setPrice(dto.getPrice());
         plan.setCurrency(dto.getCurrency().trim().toUpperCase());
-
         Plan saved = planRepositrory.save(plan);
         return PlanResponseDto.from(saved);
     }
@@ -75,4 +75,19 @@ public class PlanServiceImpl implements PlanService {
 
         return PlanResponseDto.from(plan);
     }
+
+    @Override
+    public void deletePlan(Integer id) {
+        try {
+            Plan plan = planRepositrory.findById(id)
+                    .orElseThrow(() ->
+                            new NotFoundException("Plan with such id not found"));
+
+            planRepositrory.delete(plan);
+            planRepositrory.flush();
+        }catch (DataIntegrityViolationException e){
+            throw new PlanDeletionNotAllowedException("Cannot delete plan with active subscription");
+        }
+    }
+
 }

@@ -12,4 +12,5 @@ public interface PlanService {
     PlanResponseDto getPlanById(Integer id);
     PlanResponseDto createPlan(PlanCreateDto dto);
     PlanResponseDto updatePlan(Integer id,PlanUpdateDto dto);
+    void deletePlan(Integer id);
 }
