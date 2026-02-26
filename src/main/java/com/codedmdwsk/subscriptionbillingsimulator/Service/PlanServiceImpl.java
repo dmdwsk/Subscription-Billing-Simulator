@@ -6,11 +6,13 @@ import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanCreateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanResponseDto;
 import com.codedmdwsk.subscriptionbillingsimulator.dto.plan.PlanUpdateDto;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicatePlanException;
+import com.codedmdwsk.subscriptionbillingsimulator.exceptions.DuplicateUserException;
 import com.codedmdwsk.subscriptionbillingsimulator.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -52,9 +54,14 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanResponseDto updatePlan(PlanUpdateDto dto) {
-        return null;
+    public PlanResponseDto updatePlan(Integer id,PlanUpdateDto dto) {
+        Plan plan = planRepositrory.findById(
+                id).
+                orElseThrow(()-> new NotFoundException("Plan not found"));
+        if (dto.getPrice() == plan.getPrice() && dto.getActive() == plan.getActive()){
+            return PlanResponseDto.from(plan);
+        }
+
+
     }
-
-
 }

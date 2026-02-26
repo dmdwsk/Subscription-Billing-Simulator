@@ -11,5 +11,5 @@ public interface PlanService {
     List<PlanResponseDto> getAllPlans();
     PlanResponseDto getPlanById(Integer id);
     PlanResponseDto createPlan(PlanCreateDto dto);
-    PlanResponseDto updatePlan(PlanUpdateDto dto);
+    PlanResponseDto updatePlan(Integer id,PlanUpdateDto dto);
 }

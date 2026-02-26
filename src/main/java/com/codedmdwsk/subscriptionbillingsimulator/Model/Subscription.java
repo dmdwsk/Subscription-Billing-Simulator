@@ -55,8 +55,8 @@ public class Subscription {
     @PrePersist
     void onCreate(){
         Instant now = Instant.now();
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = now;
+        this.updatedAt = now;
         if(this.status == null){
             this.status = SubscriptionStatus.ACTIVE;
         }
