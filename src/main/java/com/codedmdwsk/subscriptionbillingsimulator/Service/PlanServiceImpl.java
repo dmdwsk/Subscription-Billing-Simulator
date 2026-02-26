@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
@@ -58,10 +60,19 @@ public class PlanServiceImpl implements PlanService {
         Plan plan = planRepositrory.findById(
                 id).
                 orElseThrow(()-> new NotFoundException("Plan not found"));
-        if (dto.getPrice() == plan.getPrice() && dto.getActive() == plan.getActive()){
+        BigDecimal newPrice = dto.getPrice();
+        Boolean newActive = dto.getActive();
+        boolean samePrice = plan.getPrice() != null && newPrice != null
+                && plan.getPrice().compareTo(newPrice) == 0;
+
+        boolean sameActive = Objects.equals(plan.getActive(), newActive);
+
+        if (samePrice && sameActive) {
             return PlanResponseDto.from(plan);
         }
+        plan.setPrice(newPrice);
+        plan.setActive(newActive);
 
-
+        return PlanResponseDto.from(plan);
     }
 }
